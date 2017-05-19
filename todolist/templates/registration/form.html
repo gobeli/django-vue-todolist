@@ -1,0 +1,23 @@
+<form method="post">
+  <h1 class="title">
+    {{title}}
+  </h1>
+  <div class="box">
+    {% csrf_token %}
+    {% for field in form %}
+      <div class="field">
+        <label for="{{field.name}}" class="label">{{ field.label }}</label>
+        <p class="control">
+          <input class="input" type='{% if "password" in field.name %}password{% else %}text{% endif %}' name="{{field.name}}" required>        
+      </div>
+    {% endfor %}
+    </p>
+    {% for error in form.errors %}
+      <p class="help is-danger">{{ error }}</p>
+    {% endfor %}
+    <hr>
+    <p class="control">
+      <button type="submit" class="button is-primary">Submit</button>
+    </p>
+  </div>
+</form>
