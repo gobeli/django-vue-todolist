@@ -16,11 +16,10 @@ def index(request):
   return HttpResponse('Hello world')
 
 def deleteTodo(request, pk):
-  if request.method == 'DELETE':
+  if request.method == 'POST':
     todo = Todo.objects.get(pk=pk)
-    if todo.user.id == request.user.id:
+    if todo.user == request.user:
       todo.delete()
-      return HttpResponse('Success')
     else:
       return HttpResponseForbidden('Not your todo!!')
   return redirect('todos')
