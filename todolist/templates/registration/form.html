@@ -9,9 +9,9 @@
         <label for="{{field.name}}" class="label">{{ field.label }}</label>
         <p class="control">
           <input class="input" type='{% if "password" in field.name %}password{% else %}text{% endif %}' name="{{field.name}}" required>        
+        </p>
       </div>
     {% endfor %}
-    </p>
     {% for error in form.errors %}
       <p class="help is-danger">{{ error }}</p>
     {% endfor %}

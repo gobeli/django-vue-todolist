@@ -2,37 +2,40 @@
 <html>
   <head>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.4.1/css/bulma.min.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.3.3/vue.min.js"></script>
+    <link rel="stylesheet" href="{% static 'dist/styles.css' %}">
   </head>
   <body>
-    {% if user.is_authenticated %}
-    <nav class="nav has-shadow">
-      <!-- This "nav-toggle" hamburger menu is only visible on mobile -->
-      <!-- You need JavaScript to toggle the "is-active" class on "nav-menu" -->
-      <span class="nav-toggle">
-        <span></span>
-        <span></span>
-        <span></span>
-      </span>
-
-      <!-- This "nav-menu" is hidden on mobile -->
-      <!-- Add the modifier "is-active" to display it on mobile -->
-      <div class="nav-right nav-menu">
-        <a class="nav-item is-tab" href="/logout">
-          Logout
-        </a>
-      </div>
-    </nav>
-
-    {% endif %}
+    
     {% block templates %}
     {% endblock templates %}
+    <script type="x-template" id="csrf">
+      {% csrf_token %}
+    </script>
     <div id="app">
+       {% if user.is_authenticated %}
+        <nav class="nav has-shadow">
+          <span class="nav-toggle" @click="navOpen = !navOpen">
+            <span></span>
+            <span></span>
+            <span></span>
+          </span>
+          <div class="nav-right nav-menu" :class="{ 'is-active': navOpen }">
+            <a class="nav-item is-tab" href="/">
+              Kanban
+            </a>
+            <a class="nav-item is-tab" href="/todos">
+              Todos
+            </a>
+            <a class="nav-item is-tab" href="/logout">
+              Logout
+            </a>
+          </div>
+        </nav>
+      {% endif %}
       {% block content %}
       
       {% endblock content %}
     </div>
-    <script src="{% static 'js/dist/build.js' %}"></script>
+    <script src="{% static 'dist/build.js' %}"></script>
   </body>
 </html>

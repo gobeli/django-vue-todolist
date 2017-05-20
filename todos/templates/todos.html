@@ -1,36 +1,8 @@
 {% extends "base.html" %}
 
-{% block templates %}
-  <script type="x-template" id="todos">
-    <div class="todos">
-      <app-todo-list todos="{{todos}}" csrf="{{csrf_token}}" @edit="todo = $event"></app-todo-list>
-      <form method="post">
-        {% csrf_token %}
-        <input v-model="todo.id" class="is-hidden" type="number" name="id"/>
-        <input v-model="todo.user" class="is-hidden" type="number" name="user"/>
-        <div class="field">
-          <label class="label" for="title">Title</label>
-          <p class="control">
-            <input v-model="todo.title" class="input" type="text" name="title"/>
-          </p>
-        </div>
-        <div class="field">
-          <label class="label" for="text">Text</label>
-          <p class="control">
-            <textarea v-model="todo.text" class="textarea" name="text" type="text">
-            </textarea>
-          </p>
-        </div>
-        <input class="button is-primary" type="submit" value="Submit" />
-        <a class="button is-secondary" @click.prevent="clear">Clear</a>
-      </form>
-    </div>
-  </script>
-{% endblock templates %}
-
 {% block content %}
-  <div class="section container content" id="todos">
+  <div class="section container content">
     <h1>{{ user }}'s Todos</h1>
-    <app-todos></app-todos>
+    <app-todos todos="{{todos}}"></app-todos>
   </div>
 {% endblock content %}
