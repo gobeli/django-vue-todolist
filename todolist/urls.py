@@ -35,9 +35,10 @@ def register(request):
 
 urlpatterns = [
     url(r'^todos/', include('todos.urls')),
-    url('^register/', register, name='register'),
-    url('^login/', auth_views.login, name='login'),
-    url('^logout/', auth_views.logout, { 'next_page': 'login' } , name='logout'),
+    url(r'^kanban/', include('kanban.urls')),
+    url(r'^register/', register, name='register'),
+    url(r'^login/', auth_views.login, name='login'),
+    url(r'^logout/', auth_views.logout, { 'next_page': 'login' } , name='logout'),
     url(r'^admin/', admin.site.urls),
     url(r'^$',  include('todos.urls')),
 ]
