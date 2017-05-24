@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load staticfiles %}
 
 {% block content %}
   <div class="section container content">
@@ -6,3 +7,8 @@
     <app-todos todos="{{todos}}"></app-todos>
   </div>
 {% endblock content %}
+
+
+{% block scripts %}
+  <script src="{% static 'dist/todo.js' %}"></script>
+{% endblock scripts %}

@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% load staticfiles%}
+{% block content %}
+  <div class="section container content">
+    <h1>{{ user }}'s Boards</h1>
+    <router-view></router-view>
+  </div>
+{% endblock content %}
+
+{% block scripts %}
+  <script src="{% static 'dist/kanban.js' %}"></script>
+{% endblock scripts %}

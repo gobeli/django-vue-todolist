@@ -4,8 +4,9 @@
   "author": "Etienne Gobeli <etienne.gobeli@students.fhnw.ch>",
   "private": true,
   "scripts": {
-    "watch": "npm run watch-js | npm run watch-css",
-    "watch-js": "watchify -vd -e src/main.js -o dist/build.js",
+    "watch": "npm run watch-todo | npm run watch-kanban | npm run watch-css",
+    "watch-todo": "watchify -vd -e src/todo.js -o dist/todo.js",
+    "watch-kanban": "watchify -vd -e src/kanban.js -o dist/kanban.js",
     "scss": "node-sass --output-style compressed -o dist/ styles.sass",
     "watch-css": "nodemon -e scss -x \"npm run scss\"",
     "watchify": "watchify -vd -p browserify-hmr -e src/main.js -o dist/build.js",
@@ -14,9 +15,12 @@
     "build": "cross-env NODE_ENV=production browserify -g envify src/main.js | uglifyjs -c warnings=false -m > dist/build.js"
   },
   "dependencies": {
+    "axios": "^0.16.1",
     "bulma": "^0.4.1",
     "vue": "^2.0.1",
-    "vuedraggable": "^2.11.0"
+    "vue-multiselect": "^2.0.0-beta.15",
+    "vuedraggable": "^2.11.0",
+    "vuex": "^2.3.1"
   },
   "devDependencies": {
     "babel-core": "^6.0.0",
