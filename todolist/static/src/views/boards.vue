@@ -15,27 +15,27 @@
       </div>
       <div class="field is-grouped">
         <p class="control">
-          <button class="button is-primary" @click="mutBoard(board)">Submit</button>
+          <button class="button is-primary" @click="mutBoard()">Submit</button>
         </p>
       </div>
     </bulma-modal>
 
     <button class="button" @click="$refs.form.toggle()">+</button>
     <div class="columns is-multiline">
-      <div class="column is-one-third-tablet is-one-quarter-desktop" v-for="board in $store.state.boards.current" :key="board.id">
+      <div class="column is-one-third-tablet is-one-quarter-desktop" v-for="b in $store.state.boards.current" :key="b.id">
         <div class="card">
           <header class="card-header">
             <div class="card-header-title">
-              {{board.title}}
+              {{b.title}}
             </div>
-            <a href="javascript:void()" @click="delBoard(board)" type="submit" class="card-header-icon">
+            <a href="javascript:void()" @click="delBoard(b)" type="submit" class="card-header-icon">
               <span class="icon">
                 <i class="fa fa-times"></i>
               </span>
             </a>
           </header>
           <footer class="card-footer">
-            <a @click="editBoard(board)" class="card-footer-item button is-primary">Edit</a>
+            <a @click="editBoard(b)" class="card-footer-item button is-primary">Edit</a>
           </footer>
         </div>
       </div>
@@ -56,9 +56,19 @@
     computed: mapGetters({
       usersWithoutCurrent: 'usersWithoutCurrent'
     }),
-    methods: mapActions([
-      'mutBoard'
-    ]),
+    methods: {
+      editBoard(board) {
+        const b = Object.assign({}, board, { users: this.usersWithoutCurrent.filter(us => this.board.users.includes(us.url)) })
+        console.log(b)
+        this.board = b
+        this.$refs.form.toggle()
+      },
+      mutBoard() {
+        this.board.users.push(this.$store.state.users.current)
+        this.board.users = this.board.users.map(u => u.url)
+        this.$store.dispatch('mutBoard', this.board)
+      }
+    },
     mounted() {
       this.$store.dispatch('getCurrentBoards')
     },

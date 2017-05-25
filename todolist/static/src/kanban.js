@@ -5,7 +5,11 @@ import Boards from './views/boards.vue'
 import Modal from './components/modal.vue'
 import store from './store'
 import Multiselect from 'vue-multiselect'
+import axios from 'axios';
 
+axios.defaults.xsrfHeaderName = "X-CSRFTOKEN";
+axios.defaults.xsrfCookieName = "XCSRF-TOKEN";
+axios.defaults.headers = { 'X-CSRFTOKEN': window.Django.csrf }
 
 Vue.use(VueRouter)
 
