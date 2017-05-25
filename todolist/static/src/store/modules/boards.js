@@ -15,7 +15,16 @@ const actions = {
       boardApi.addBoard(board, board => {
         commit('ADD_BOARD', { board })
       })
+    } else {
+      boardApi.mutBoard(board, board => {
+        commit('MUT_BOARD', { board })
+      })
     }
+  },
+  delBoard ({ commit, state }, board) {
+    boardApi.delBoard(board, () => {
+      commit('DEL_BOARD', { board })
+    })
   }
 }
 
@@ -25,6 +34,15 @@ const mutations = {
   },
   ['ADD_BOARD'] (state, { board }) {
     state.current = [...state.current, board]
+  },
+  ['MUT_BOARD'] (state, { board }) {
+    const index = state.current.indexOf(state.current.find(u => u.id === board.id))
+    state.current.splice(index, 1)
+    state.current.splice(index, 0, board)
+  },
+  ['DEL_BOARD'] (state, { board }) {
+    const index = state.current.indexOf(state.current.find(u => u.id === board.id))
+    state.current.splice(index, 1)
   },
 }
 

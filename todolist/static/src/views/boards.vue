@@ -20,10 +20,9 @@
       </div>
     </bulma-modal>
 
-    <button class="button" @click="$refs.form.toggle()">+</button>
     <div class="columns is-multiline">
       <div class="column is-one-third-tablet is-one-quarter-desktop" v-for="b in $store.state.boards.current" :key="b.id">
-        <div class="card">
+        <router-link tag="div" class="card" :to="{ name: 'board', params: { id: b.id }}">
           <header class="card-header">
             <div class="card-header-title">
               {{b.title}}
@@ -37,9 +36,10 @@
           <footer class="card-footer">
             <a @click="editBoard(b)" class="card-footer-item button is-primary">Edit</a>
           </footer>
-        </div>
+        </router-link>
       </div>
     </div>
+    <button class="button" @click="$refs.form.toggle()">+</button>    
   </div>
 </template>
 <script>
@@ -58,8 +58,7 @@
     }),
     methods: {
       editBoard(board) {
-        const b = Object.assign({}, board, { users: this.usersWithoutCurrent.filter(us => this.board.users.includes(us.url)) })
-        console.log(b)
+        const b = Object.assign({}, board, { users: this.usersWithoutCurrent.filter(us => board.users.includes(us.url)) })
         this.board = b
         this.$refs.form.toggle()
       },
@@ -67,10 +66,11 @@
         this.board.users.push(this.$store.state.users.current)
         this.board.users = this.board.users.map(u => u.url)
         this.$store.dispatch('mutBoard', this.board)
+        this.$refs.form.toggle()
+      },
+      delBoard(board) {
+        this.$store.dispatch('delBoard', board)
       }
-    },
-    mounted() {
-      this.$store.dispatch('getCurrentBoards')
     },
   }
 </script>
