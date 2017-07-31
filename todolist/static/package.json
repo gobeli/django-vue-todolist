@@ -7,12 +7,14 @@
     "watch": "npm run watch-todo | npm run watch-kanban | npm run watch-css",
     "watch-todo": "watchify -vd -e src/todo.js -o dist/todo.js",
     "watch-kanban": "watchify -vd -e src/kanban.js -o dist/kanban.js",
+    "build": "npm run build-kanban && npm run build-todo",
+    "build-kanban": "cross-env NODE_ENV=production browserify -g envify src/kanban.js | uglifyjs -c warnings=false -m > dist/kanban.js",
+    "build-todo": "cross-env NODE_ENV=production browserify -g envify src/todo.js | uglifyjs -c warnings=false -m > dist/todo.js",
     "scss": "node-sass --output-style compressed -o dist/ styles.sass",
     "watch-css": "nodemon -e scss -x \"npm run scss\"",
     "watchify": "watchify -vd -p browserify-hmr -e src/main.js -o dist/build.js",
     "serve": "http-server -o -s -c 1 -a localhost",
-    "dev": "npm-run-all --parallel watchify serve",
-    "build": "cross-env NODE_ENV=production browserify -g envify src/main.js | uglifyjs -c warnings=false -m > dist/build.js"
+    "dev": "npm-run-all --parallel watchify serve"
   },
   "dependencies": {
     "axios": "^0.16.1",
